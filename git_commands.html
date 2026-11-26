@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cẩm Nang Các Câu Lệnh Git Cơ Bản & Nâng Cao</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --code-bg: #090d16;
+      --code-color: #4ade80;
+      --tag-bg: rgba(56, 189, 248, 0.15);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 1rem;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0) 100%);
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+    header h1 {
+      font-size: 2.4rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .card-title {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cmd-item {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px dashed var(--card-border);
+    }
+    .cmd-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .cmd-code {
+      display: block;
+      background: var(--code-bg);
+      color: var(--code-color);
+      padding: 0.6rem 0.9rem;
+      border-radius: 6px;
+      font-family: "Fira Code", Consolas, Monaco, monospace;
+      font-size: 0.95rem;
+      overflow-x: auto;
+      margin-bottom: 0.4rem;
+      border: 1px solid #1e293b;
+    }
+    .cmd-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+    .workflow {
+      grid-column: 1 / -1;
+      background: #172033;
+      border: 1px solid #38bdf8;
+    }
+    .workflow ol {
+      padding-left: 1.5rem;
+      color: var(--text-main);
+    }
+    .workflow li {
+      margin-bottom: 0.75rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📖 Tổng Hợp Các Câu Lệnh Git Cơ Bản</h1>
+      <p>Hướng dẫn tra cứu nhanh các lệnh Git thông dụng dành cho lập trình viên</p>
+    </header>
+
+    <div class="grid">
+      <!-- Quy trình cơ bản -->
+      <div class="card workflow">
+        <h2 class="card-title">🚀 Quy trình cơ bản đẩy dự án lên GitHub</h2>
+        <ol>
+          <li><strong>Khởi tạo kho lưu trữ cục bộ:</strong> <code class="cmd-code">git init</code></li>
+          <li><strong>Thêm tất cả các tệp vào khu vực chờ (Staging Area):</strong> <code class="cmd-code">git add .</code></li>
+          <li><strong>Lưu lại lịch sử thay đổi:</strong> <code class="cmd-code">git commit -m "Nội dung mô tả commit"</code></li>
+          <li><strong>Liên kết với kho từ xa (GitHub):</strong> <code class="cmd-code">git remote add origin https://github.com/&lt;user&gt;/&lt;repo&gt;.git</code></li>
+          <li><strong>Đẩy code lên nhánh chính:</strong> <code class="cmd-code">git push -u origin main</code></li>
+        </ol>
+      </div>
+
+      <!-- 1. Khởi tạo & Cấu hình -->
+      <div class="card">
+        <h2 class="card-title">⚙️ 1. Khởi tạo & Cấu hình</h2>
+        <div class="cmd-item">
+          <code class="cmd-code">git init</code>
+          <p class="cmd-desc">Khởi tạo một Git repository mới tại thư mục hiện hành.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git clone &lt;url&gt;</code>
+          <p class="cmd-desc">Sao chép một repository từ GitHub hoặc remote server về máy cục bộ.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git config --global user.name "Tên Của Bạn"</code>
+          <p class="cmd-desc">Cấu hình tên hiển thị cho các commit.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git config --global user.email "email@example.com"</code>
+          <p class="cmd-desc">Cấu hình email tài khoản GitHub.</p>
+        </div>
+      </div>
+
+      <!-- 2. Quản lý Thay đổi -->
+      <div class="card">
+        <h2 class="card-title">📝 2. Quản lý Thay đổi & Commit</h2>
+        <div class="cmd-item">
+          <code class="cmd-code">git status</code>
+          <p class="cmd-desc">Kiểm tra trạng thái các file (đã sửa đổi, đã đưa vào staging hay chưa theo dõi).</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git add &lt;tên_file&gt; / git add .</code>
+          <p class="cmd-desc">Thêm file cụ thể hoặc tất cả thay đổi vào khu vực Staging Area.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git commit -m "Thông điệp commit"</code>
+          <p class="cmd-desc">Tạo một commit ghi lại các thay đổi đã stage.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git diff</code>
+          <p class="cmd-desc">Xem chi tiết các thay đổi so với commit gần nhất.</p>
+        </div>
+      </div>
+
+      <!-- 3. Làm việc với Nhánh (Branch) -->
+      <div class="card">
+        <h2 class="card-title">🌿 3. Làm việc với Nhánh (Branch)</h2>
+        <div class="cmd-item">
+          <code class="cmd-code">git branch</code>
+          <p class="cmd-desc">Liệt kê tất cả các nhánh hiện có trong repo cục bộ.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git branch &lt;tên_nhánh&gt;</code>
+          <p class="cmd-desc">Tạo một nhánh mới.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git checkout -b &lt;tên_nhánh&gt; / git switch -c &lt;tên_nhánh&gt;</code>
+          <p class="cmd-desc">Tạo nhánh mới và chuyển sang làm việc trên nhánh đó ngay lập tức.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git merge &lt;tên_nhánh&gt;</code>
+          <p class="cmd-desc">Hợp nhất nội dung từ nhánh chỉ định vào nhánh hiện tại.</p>
+        </div>
+      </div>
+
+      <!-- 4. Làm việc với Remote (GitHub) -->
+      <div class="card">
+        <h2 class="card-title">☁️ 4. Đồng bộ với Remote (GitHub)</h2>
+        <div class="cmd-item">
+          <code class="cmd-code">git remote -v</code>
+          <p class="cmd-desc">Xem danh sách các remote URL đang kết nối.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git push origin &lt;tên_nhánh&gt;</code>
+          <p class="cmd-desc">Đẩy các commit từ nhánh cục bộ lên repository trên GitHub.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git pull origin &lt;tên_nhánh&gt;</code>
+          <p class="cmd-desc">Kéo và tự động hợp nhất các commit mới nhất từ GitHub về máy.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git fetch</code>
+          <p class="cmd-desc">Lấy dữ liệu mới nhất từ remote về nhưng chưa hợp nhất vào code hiện tại.</p>
+        </div>
+      </div>
+
+      <!-- 5. Lịch sử & Hoàn tác -->
+      <div class="card">
+        <h2 class="card-title">⏪ 5. Lịch sử & Hoàn tác</h2>
+        <div class="cmd-item">
+          <code class="cmd-code">git log --oneline</code>
+          <p class="cmd-desc">Xem lịch sử các commit đã thực hiện theo dạng rút gọn.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git reset HEAD~1</code>
+          <p class="cmd-desc">Hủy bỏ commit gần nhất nhưng giữ lại các thay đổi trong file.</p>
+        </div>
+        <div class="cmd-item">
+          <code class="cmd-code">git stash / git stash pop</code>
+          <p class="cmd-desc">Tạm cất các thay đổi chưa commit để chuyển việc khác, sau đó lấy lại.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Demo Git Tutorial • Doanh</p>
+    </footer>
+  </div>
+</body>
+</html>
